@@ -23,6 +23,21 @@ namespace _0722detetion.Views
         public ScarachDetectionView()
         {
             InitializeComponent();
+            Loaded += ScarachDetectionView_OnLoaded;
+        }
+
+        private void ScarachDetectionView_OnLoaded(object sender, RoutedEventArgs e)
+        {
+          var vm = DataContext as ViewModel.ScarachDetectionViewModel;
+            if (vm != null)
+            {
+                vm.hImage = halconimage.HalconWindow;
+                vm.hResult = halconresult.HalconWindow;
+            }
+            else
+            {
+                MessageBox.Show("ViewModel is not set correctly.");
+            }
         }
     }
 }

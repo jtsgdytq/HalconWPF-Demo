@@ -1,13 +1,8 @@
 ﻿using _0722detetion.Models;
 using _0722detetion.Service;
-using System;
-using System.Collections.Generic;
+
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Input;
+
 
 namespace _0722detetion.ViewModel
 {
