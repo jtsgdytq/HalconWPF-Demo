@@ -18,6 +18,10 @@ namespace _0722detetion.ViewModel
         /// </summary>
         public HWindow hImage { get; set; }
         public HWindow hResult { get; set; }
+        
+        public HSmartWindowControlWPF HalconImage { get; set; }
+        public HSmartWindowControlWPF HalconResult { get; set; }
+        
 
         private CancellationTokenSource cancellationTokenSource;
         private Task halcontask;
@@ -28,6 +32,7 @@ namespace _0722detetion.ViewModel
             Operation = operationstart;
             RunCommnd = new DelegateCommand(Run);
             LoadImageFiles();//加载图片文件
+            
         }
 
 
@@ -48,9 +53,11 @@ namespace _0722detetion.ViewModel
         {
             if (Operation == operationstart)
             {
+               
                 cancellationTokenSource = new CancellationTokenSource();
                 halcontask = Task.Run(() => Detection(cancellationTokenSource.Token));
                 Operation = operationend;
+                
 
             }
             else
@@ -101,25 +108,31 @@ namespace _0722detetion.ViewModel
                         continue;
                     }
                     HOperatorSet.ReadImage(out HObject image, imagePath);
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        HOperatorSet.DispImage(image, hImage);
-                    });
-                    HOperatorSet.SetColor(hResult, "red");
-                    HObject processedImage = ProcessImage(image);
+                    ProcessImage(image);
 
+                    // 在UI线程中显示图像
                     Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        HOperatorSet.DispObj(image, hImage);
-                        HOperatorSet.DispObj(processedImage, hResult);
+                    {                     
+                        // 获取图像的宽高
+                        HOperatorSet.GetImageSize(image, out HTuple width, out HTuple height);
+
+                        // 设置显示区域为整个图像大小
+                        HOperatorSet.SetPart(hImage, 0, 0, height - 1, width - 1);
+
+                        HOperatorSet.DispImage(image, hImage);
+
                     });
+                   
+                   
+                    Thread.Sleep(2000); // 控制处理速度
+
 
                     Index++;
                     // 释放资源
                     image.Dispose();
-                    processedImage.Dispose();
+                   
                  
-                    Thread.Sleep(500); // 控制处理速度
+                   
 
                     cancellationToken.ThrowIfCancellationRequested();
                 }
@@ -135,7 +148,7 @@ namespace _0722detetion.ViewModel
         /// </summary>
         /// <param name="image"></param>
         /// <returns></returns>
-        private HObject ProcessImage(HObject image)
+        private void ProcessImage(HObject image)
         {
             HObject  ho_R = null, ho_G = null, ho_B = null;
             HObject ho_ImageFFT = null, ho_ImageGauss = null, ho_ImageConvol = null;
@@ -252,8 +265,22 @@ namespace _0722detetion.ViewModel
                 //仿射变换
                 
                 HOperatorSet.AffineTransContourXld(ho_Lines, out ho_Defects, hv_HomMat2DScale);
-                var result = ho_Defects;
-                return result;
+                HOperatorSet.SetColor(hResult, "red");
+                //显示处理后的图像
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    // 获取图像的宽高
+                    HOperatorSet.GetImageSize(image, out HTuple width, out HTuple height);
+
+                    // 设置显示区域为整个图像大小
+                    HOperatorSet.SetPart(hResult, 0, 0, height - 1, width - 1);
+
+                    HOperatorSet.DispObj(image, hResult);
+                    HOperatorSet.DispObj(ho_Defects, hResult);
+                });
+               
+                
+
             }
             catch (Exception ex)
             {

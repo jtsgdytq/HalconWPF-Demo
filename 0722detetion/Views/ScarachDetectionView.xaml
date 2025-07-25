@@ -39,7 +39,7 @@
             Grid.Column="0"
             Margin="1"
             BorderBrush="Gray"
-            BorderThickness="1">
+            BorderThickness="1" >
             <halcon:HSmartWindowControlWPF x:Name="halconimage" />
         </Border>
         <Border

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HalconDotNet;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,6 +34,10 @@ namespace _0722detetion.Views
             {
                 vm.hImage = halconimage.HalconWindow;
                 vm.hResult = halconresult.HalconWindow;
+                vm.HalconImage = halconimage;
+                vm.HalconResult = halconresult;
+                
+                
             }
             else
             {
