@@ -42,8 +42,8 @@ namespace _0722detetion.Service
             items.Add(new MenuItems
             {
                 Icon = "ViewDashboard", // 仪表板图标
-                Name = "另一个页面",
-                PageName = "AnotherPageView"
+                Name = "拟合测量",
+                PageName = "FintMeasureView"
             });
 
             // 可以添加更多菜单项

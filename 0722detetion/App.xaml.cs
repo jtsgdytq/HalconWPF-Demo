@@ -15,6 +15,7 @@ namespace _0722detetion
         {
             containerRegistry.RegisterForNavigation<MainView,MainViewModel>();
             containerRegistry.RegisterForNavigation<ScarachDetectionView,ScarachDetectionViewModel>();
+            containerRegistry.RegisterForNavigation<FintMeasureView,FintMeasureViewModel>();
         }
         protected override void ConfigureViewModelLocator()
         {

@@ -18,10 +18,10 @@ namespace _0722detetion.ViewModel
         /// </summary>
         public HWindow hImage { get; set; }
         public HWindow hResult { get; set; }
-        
+
         public HSmartWindowControlWPF HalconImage { get; set; }
         public HSmartWindowControlWPF HalconResult { get; set; }
-        
+
 
         private CancellationTokenSource cancellationTokenSource;
         private Task halcontask;
