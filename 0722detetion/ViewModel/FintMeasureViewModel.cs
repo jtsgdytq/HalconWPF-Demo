@@ -1,10 +1,12 @@
 using _0722detetion.Models;
+using _0722detetion.Service;
 using HalconDotNet;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace _0722detetion.ViewModel;
 
-public class FintMeasureViewModel:BindableBase
+public class FintMeasureViewModel:BindableBase, IResetStart
 {
 
     public FintMeasureViewModel()
@@ -25,7 +27,7 @@ public class FintMeasureViewModel:BindableBase
 
     public DelegateCommand StartCommand { get; set; }
 
-
+    
     private void Run()
     {
         Task.Run(() => {
@@ -193,5 +195,23 @@ public class FintMeasureViewModel:BindableBase
         {
             Infos.Add(new FitMeasureInfo() { Name = name, Value = value });
         });
+    }
+
+    public void Reset()
+    {
+    
+       App.Current.Dispatcher.Invoke(() => {
+      
+           if(infos != null)
+           {
+               Infos.Clear();
+           }
+           if(hWindow != null)
+           {
+               hWindow.ClearWindow();
+           }
+
+       } );
+        
     }
 }

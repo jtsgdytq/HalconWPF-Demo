@@ -1,4 +1,5 @@
-﻿using HalconDotNet;
+﻿using _0722detetion.Service;
+using HalconDotNet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Windows;
 
 namespace _0722detetion.ViewModel
 {
-    public class ScarachDetectionViewModel : BindableBase
+    public class ScarachDetectionViewModel : BindableBase,IResetStart
     {
         public readonly string operationstart = "Operation Start";
         public readonly string operationend = "Operation End";
@@ -321,7 +322,7 @@ namespace _0722detetion.ViewModel
             
         }
 
-
+        
 
         public void calculate_lines_gauss_parameters(HTuple hv_MaxLineWidth, HTuple hv_Contrast,out HTuple hv_Sigma, out HTuple hv_Low, out HTuple hv_High)
         {
@@ -496,6 +497,48 @@ namespace _0722detetion.ViewModel
 
                 throw HDevExpDefaultException;
             }
+        }
+        /// <summary>
+        /// 用重置方法,用于清空窗口和重置参数
+        /// </summary>
+        public void Reset()
+        {
+            // 1. 停止当前任务
+            if (cancellationTokenSource != null)
+            {
+                cancellationTokenSource.Cancel();
+                if (halcontask != null && !halcontask.IsCompleted)
+                {
+                    try
+                    {
+                        halcontask.Wait();
+                    }
+                    catch (AggregateException ex)
+                    {
+                        Console.WriteLine("Task cancelled: " + ex.Message);
+                    }
+                }
+            }
+
+            // 2. 清空窗口显示
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                try
+                {
+                    hImage?.ClearWindow();
+                    hResult?.ClearWindow();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("清空窗口失败: " + ex.Message);
+                }
+            });
+
+            // 3. 重置参数
+            Index = 0;
+            Operation = operationstart;
+
+            
         }
 
     }

@@ -34,7 +34,7 @@
             </Border>
         </Grid>
         <Grid Grid.Column="1">
-            <ListView x:Name="listView" Margin="5" ItemsSource="{Binding Infos}">
+            <ListView x:Name="listView" Margin="5" ItemsSource="{Binding Infos}" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Name}"  Header="Name"/>
