@@ -46,6 +46,13 @@ namespace _0722detetion.Service
                 PageName = "FintMeasureView"
             });
 
+            items.Add(new MenuItems
+            {
+                Icon = "BottleWine", // 摄像头图标
+                Name = "瓶口检测",
+                PageName = "BottleDefectsView"
+            });
+
             // 可以添加更多菜单项
             items.Add(new MenuItems
             {
