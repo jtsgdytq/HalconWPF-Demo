@@ -20,6 +20,7 @@ namespace _0722detetion
             containerRegistry.RegisterForNavigation<FintMeasureView,FintMeasureViewModel>();
             containerRegistry.RegisterForNavigation<BottleDefectsView,BottleDefectsViewModel>();
             containerRegistry.RegisterSingleton<BottlesParamModel>();
+            containerRegistry.RegisterForNavigation<SocketConnectionView,SocketConnectionViewModel>();
         }
         protected override void ConfigureViewModelLocator()
         {

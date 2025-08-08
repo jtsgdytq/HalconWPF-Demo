@@ -19,6 +19,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.1*" />
                 <RowDefinition Height="0.9*" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <TextBlock
                 HorizontalAlignment="Center"
@@ -32,13 +33,18 @@
                 BorderThickness="1">
                 <halcon:HSmartWindowControlWPF x:Name="halconWindow" />
             </Border>
+            <TextBlock x:Name="coodination" Grid.Row="2" Text="{Binding Move}" />
         </Grid>
         <Grid Grid.Column="1">
-            <ListView x:Name="listView" Margin="5" ItemsSource="{Binding Infos}" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <ListView
+                x:Name="listView"
+                Margin="5"
+                ItemsSource="{Binding Infos}"
+                ScrollViewer.VerticalScrollBarVisibility="Hidden">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Name}"  Header="Name"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Value}"  Header="Value"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Value}" Header="Value" />
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -46,7 +52,8 @@
             <Button
                 Margin="5"
                 VerticalAlignment="Bottom"
-                Content="Start"  Command="{Binding StartCommand}"/>
+                Command="{Binding StartCommand}"
+                Content="Start" />
         </Grid>
 
     </Grid>

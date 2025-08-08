@@ -52,6 +52,12 @@ namespace _0722detetion.Service
                 Name = "瓶口检测",
                 PageName = "BottleDefectsView"
             });
+            items.Add(new MenuItems
+            {
+                Icon = "HumanGreetingProximity", // Socket通信图标
+                Name = "Socket通信",
+                PageName = "SocketConnectionView"
+            });
 
             // 可以添加更多菜单项
             items.Add(new MenuItems

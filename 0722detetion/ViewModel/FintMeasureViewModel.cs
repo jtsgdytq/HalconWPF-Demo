@@ -3,6 +3,7 @@ using _0722detetion.Service;
 using HalconDotNet;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Input;
 
 namespace _0722detetion.ViewModel;
 
@@ -12,6 +13,10 @@ public class FintMeasureViewModel:BindableBase, IResetStart
     public FintMeasureViewModel()
     {
         StartCommand = new DelegateCommand(Run);
+
+
+
+
     }
 
     private ObservableCollection<FitMeasureInfo> infos;
@@ -25,9 +30,33 @@ public class FintMeasureViewModel:BindableBase, IResetStart
 
     public HWindow hWindow { get; set; }
 
+    public HSmartWindowControlWPF halcon { get; set; }
+
     public DelegateCommand StartCommand { get; set; }
 
-    
+    private string move;
+
+    public string Move
+    {
+        get { return move; }
+        set { move = value; RaisePropertyChanged(); }
+    }
+
+
+
+    public void MouseMove()
+    {
+       halcon.MouseMove += Halcon_MouseMove;
+    }
+
+    private void Halcon_MouseMove(object sender, MouseEventArgs e)
+    {
+        int x =(int) e.GetPosition(halcon).X;
+        int y = (int)e.GetPosition(halcon).Y;
+
+        Move=$"X: {x}, Y: {y}";
+    }
+
     private void Run()
     {
         Task.Run(() => {

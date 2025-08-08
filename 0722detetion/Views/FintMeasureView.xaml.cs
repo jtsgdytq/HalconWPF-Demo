@@ -18,6 +18,8 @@ public partial class FintMeasureView : UserControl
         if (vm != null)
         {
            vm.hWindow = halconWindow.HalconWindow;
+            vm.halcon = halconWindow;
+            vm.MouseMove();
         }
         else
         {
